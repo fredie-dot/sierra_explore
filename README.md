@@ -56,22 +56,22 @@ git push origin main
 
 #### Users
 - `POST /users` - Create a new user
-- `GET /users/:id` - Get user by ID
+- `POST /users/get` - Get user by ID
 
 #### Payments
 - `POST /payments` - Create a new payment
-- `GET /payments/:id` - Get payment by ID
+- `POST /payments/get` - Get payment by ID
 
 #### Maps/Locations
 - `POST /locations` - Create a new location
-- `GET /locations/:id` - Get location by ID
+- `POST /locations/get` - Get location by ID
 - `POST /locations/search` - Search for locations
 
 #### Notifications
 - `POST /notifications` - Create a new notification
-- `GET /notifications/:id` - Get notification by ID
-- `GET /notifications` - List user notifications
-- `POST /notifications/:id/read` - Mark notification as read
+- `POST /notifications/get` - Get notification by ID
+- `POST /notifications/list` - List user notifications
+- `POST /notifications/read` - Mark notification as read
 
 ## 🏗️ Project Structure
 
@@ -81,6 +81,7 @@ sierraexplore/
 ├── go.mod              # Go module file
 ├── main.go             # Main application entry point
 ├── backend/            # Service implementations
+│   ├── hello/          # Hello service
 │   ├── auth/           # Authentication service
 │   ├── users/          # User management service
 │   ├── payments/       # Payment processing service
