@@ -2,7 +2,7 @@ package notifications
 
 import (
 	"context"
-	"encore.dev/beta/errs"
+	"errors"
 )
 
 // Notification represents a notification in the system
@@ -35,6 +35,11 @@ type GetNotificationResponse struct {
 	Notification *Notification `json:"notification"`
 }
 
+// GetNotificationRequest represents the request to get a notification
+type GetNotificationRequest struct {
+	ID string `json:"id"`
+}
+
 // ListNotificationsRequest represents the request to list notifications
 type ListNotificationsRequest struct {
 	UserID string `json:"user_id"`
@@ -62,11 +67,11 @@ type MarkAsReadResponse struct {
 func CreateNotification(ctx context.Context, req *CreateNotificationRequest) (*CreateNotificationResponse, error) {
 	// Placeholder implementation
 	if req.UserID == "" {
-		return nil, errs.B().Msg("user_id is required").Err()
+		return nil, errors.New("user_id is required")
 	}
 	
 	if req.Title == "" || req.Message == "" {
-		return nil, errs.B().Msg("title and message are required").Err()
+		return nil, errors.New("title and message are required")
 	}
 	
 	// TODO: Add actual notification creation logic with email/SMS
@@ -87,16 +92,16 @@ func CreateNotification(ctx context.Context, req *CreateNotificationRequest) (*C
 // GetNotification retrieves a notification by ID
 // TODO: Implement actual notification retrieval logic
 //
-//encore:api private method=GET path=/notifications/:id
-func GetNotification(ctx context.Context, id string) (*GetNotificationResponse, error) {
+//encore:api private method=POST path=/notifications/get
+func GetNotification(ctx context.Context, req *GetNotificationRequest) (*GetNotificationResponse, error) {
 	// Placeholder implementation
-	if id == "" {
-		return nil, errs.B().Msg("notification id is required").Err()
+	if req.ID == "" {
+		return nil, errors.New("notification id is required")
 	}
 	
 	// TODO: Add actual notification retrieval logic
 	notification := &Notification{
-		ID:      id,
+		ID:      req.ID,
 		UserID:  "user_placeholder",
 		Title:   "Placeholder Notification",
 		Message: "This is a placeholder notification for testing",
@@ -116,7 +121,7 @@ func GetNotification(ctx context.Context, id string) (*GetNotificationResponse, 
 func ListNotifications(ctx context.Context, req *ListNotificationsRequest) (*ListNotificationsResponse, error) {
 	// Placeholder implementation
 	if req.UserID == "" {
-		return nil, errs.B().Msg("user_id is required").Err()
+		return nil, errors.New("user_id is required")
 	}
 	
 	// TODO: Add actual notification listing logic
@@ -153,7 +158,7 @@ func ListNotifications(ctx context.Context, req *ListNotificationsRequest) (*Lis
 func MarkAsRead(ctx context.Context, req *MarkAsReadRequest) (*MarkAsReadResponse, error) {
 	// Placeholder implementation
 	if req.NotificationID == "" {
-		return nil, errs.B().Msg("notification id is required").Err()
+		return nil, errors.New("notification id is required")
 	}
 	
 	// TODO: Add actual mark as read logic

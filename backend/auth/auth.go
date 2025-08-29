@@ -2,7 +2,7 @@ package auth
 
 import (
 	"context"
-	"encore.dev/beta/errs"
+	"errors"
 )
 
 // User represents an authenticated user
@@ -60,7 +60,7 @@ type RefreshTokenResponse struct {
 func Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
 	// Placeholder implementation
 	if req.Email == "" || req.Password == "" {
-		return nil, errs.B().Msg("email and password are required").Err()
+		return nil, errors.New("email and password are required")
 	}
 	
 	// TODO: Add actual authentication logic with JWT
@@ -87,7 +87,7 @@ func Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
 func Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, error) {
 	// Placeholder implementation
 	if req.Email == "" || req.Password == "" || req.Name == "" {
-		return nil, errs.B().Msg("email, password, and name are required").Err()
+		return nil, errors.New("email, password, and name are required")
 	}
 	
 	// TODO: Add actual registration logic
@@ -114,7 +114,7 @@ func Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, err
 func RefreshToken(ctx context.Context, req *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	// Placeholder implementation
 	if req.RefreshToken == "" {
-		return nil, errs.B().Msg("refresh token is required").Err()
+		return nil, errors.New("refresh token is required")
 	}
 	
 	// TODO: Add actual token refresh logic

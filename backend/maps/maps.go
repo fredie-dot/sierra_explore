@@ -2,8 +2,7 @@ package maps
 
 import (
 	"context"
-
-	"encore.dev/beta/errs"
+	"errors"
 )
 
 // Location represents a location in the system
@@ -62,7 +61,7 @@ type SearchLocationsResponse struct {
 func CreateLocation(ctx context.Context, req *CreateLocationRequest) (*CreateLocationResponse, error) {
 	// Placeholder implementation
 	if req.Name == "" {
-		return nil, errs.B().Msg("name is required").Err()
+		return nil, errors.New("name is required")
 	}
 
 	// TODO: Add actual location creation logic with Mapbox
@@ -87,7 +86,7 @@ func CreateLocation(ctx context.Context, req *CreateLocationRequest) (*CreateLoc
 func GetLocation(ctx context.Context, req *GetLocationRequest) (*GetLocationResponse, error) {
 	// Placeholder implementation
 	if req.ID == "" {
-		return nil, errs.B().Msg("location id is required").Err()
+		return nil, errors.New("location id is required")
 	}
 
 	// TODO: Add actual location retrieval logic
@@ -112,7 +111,7 @@ func GetLocation(ctx context.Context, req *GetLocationRequest) (*GetLocationResp
 func SearchLocations(ctx context.Context, req *SearchLocationsRequest) (*SearchLocationsResponse, error) {
 	// Placeholder implementation
 	if req.Query == "" {
-		return nil, errs.B().Msg("query is required").Err()
+		return nil, errors.New("query is required")
 	}
 
 	// TODO: Add actual location search logic with Mapbox API

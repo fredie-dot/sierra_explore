@@ -2,7 +2,7 @@ package hello
 
 import (
 	"context"
-	"encore.dev/beta/errs"
+	"errors"
 )
 
 // HelloRequest represents the request to the hello endpoint
@@ -21,7 +21,7 @@ type HelloResponse struct {
 //encore:api public path=/hello/:name method=GET
 func SayHello(ctx context.Context, name string) (*HelloResponse, error) {
 	if name == "" {
-		return nil, errs.B().Msg("name cannot be empty").Err()
+		return nil, errors.New("name cannot be empty")
 	}
 	return &HelloResponse{Message: "Hello, " + name + "!"}, nil
 }
