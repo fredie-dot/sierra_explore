@@ -2,7 +2,7 @@ package users
 
 import (
 	"context"
-	"errors"
+	"encore.dev/beta/errs"
 )
 
 // User represents a user in the system
@@ -41,8 +41,11 @@ type GetUserResponse struct {
 //encore:api private method=POST path=/users
 func CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
 	// Placeholder implementation
-	if req.Email == "" || req.Name == "" {
-		return nil, errors.New("email and name are required")
+	if req.Email == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("email is required").Err()
+	}
+	if req.Name == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("name is required").Err()
 	}
 	
 	// TODO: Add actual user creation logic with database
@@ -64,7 +67,7 @@ func CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserRespons
 func GetUser(ctx context.Context, req *GetUserRequest) (*GetUserResponse, error) {
 	// Placeholder implementation
 	if req.ID == "" {
-		return nil, errors.New("user id is required")
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("user id is required").Err()
 	}
 	
 	// TODO: Add actual user retrieval logic with database

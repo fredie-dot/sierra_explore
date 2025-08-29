@@ -2,7 +2,7 @@ package auth
 
 import (
 	"context"
-	"errors"
+	"encore.dev/beta/errs"
 )
 
 // User represents an authenticated user
@@ -59,8 +59,11 @@ type RefreshTokenResponse struct {
 //encore:api public method=POST path=/auth/login
 func Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
 	// Placeholder implementation
-	if req.Email == "" || req.Password == "" {
-		return nil, errors.New("email and password are required")
+	if req.Email == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("email is required").Err()
+	}
+	if req.Password == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("password is required").Err()
 	}
 	
 	// TODO: Add actual authentication logic with JWT
@@ -86,8 +89,14 @@ func Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
 //encore:api public method=POST path=/auth/register
 func Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, error) {
 	// Placeholder implementation
-	if req.Email == "" || req.Password == "" || req.Name == "" {
-		return nil, errors.New("email, password, and name are required")
+	if req.Email == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("email is required").Err()
+	}
+	if req.Password == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("password is required").Err()
+	}
+	if req.Name == "" {
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("name is required").Err()
 	}
 	
 	// TODO: Add actual registration logic
@@ -114,7 +123,7 @@ func Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, err
 func RefreshToken(ctx context.Context, req *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	// Placeholder implementation
 	if req.RefreshToken == "" {
-		return nil, errors.New("refresh token is required")
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("refresh token is required").Err()
 	}
 	
 	// TODO: Add actual token refresh logic

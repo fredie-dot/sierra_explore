@@ -2,7 +2,7 @@ package payments
 
 import (
 	"context"
-	"errors"
+	"encore.dev/beta/errs"
 )
 
 // Payment represents a payment in the system
@@ -47,11 +47,11 @@ type GetPaymentResponse struct {
 func CreatePayment(ctx context.Context, req *CreatePaymentRequest) (*CreatePaymentResponse, error) {
 	// Placeholder implementation
 	if req.Amount <= 0 {
-		return nil, errors.New("amount must be greater than 0")
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("amount must be greater than 0").Err()
 	}
 	
 	if req.UserID == "" {
-		return nil, errors.New("user_id is required")
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("user_id is required").Err()
 	}
 	
 	// TODO: Add actual payment creation logic with Stripe
@@ -76,7 +76,7 @@ func CreatePayment(ctx context.Context, req *CreatePaymentRequest) (*CreatePayme
 func GetPayment(ctx context.Context, req *GetPaymentRequest) (*GetPaymentResponse, error) {
 	// Placeholder implementation
 	if req.ID == "" {
-		return nil, errors.New("payment id is required")
+		return nil, errs.B().Code(errs.InvalidArgument).Msg("payment id is required").Err()
 	}
 	
 	// TODO: Add actual payment retrieval logic

@@ -2,4 +2,4 @@ module sierraexplore
 
 go 1.21
 
-require encore.dev v1.49.1
+require encore.dev v1.48.13 // indirect
