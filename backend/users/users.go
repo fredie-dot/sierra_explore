@@ -1,0 +1,75 @@
+package users
+
+import (
+	"context"
+	"encore.dev/beta/errs"
+)
+
+// User represents a user in the system
+type User struct {
+	ID       string `json:"id"`
+	Email    string `json:"email"`
+	Name     string `json:"name"`
+	Created  string `json:"created"`
+	Updated  string `json:"updated"`
+}
+
+// CreateUserRequest represents the request to create a new user
+type CreateUserRequest struct {
+	Email string `json:"email"`
+	Name  string `json:"name"`
+}
+
+// CreateUserResponse represents the response from creating a user
+type CreateUserResponse struct {
+	User *User `json:"user"`
+}
+
+// GetUserResponse represents the response from getting a user
+type GetUserResponse struct {
+	User *User `json:"user"`
+}
+
+// CreateUser creates a new user
+// TODO: Implement actual user creation logic
+//
+//encore:api private method=POST path=/users
+func CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserResponse, error) {
+	// Placeholder implementation
+	if req.Email == "" || req.Name == "" {
+		return nil, errs.B().Msg("email and name are required").Err()
+	}
+	
+	// TODO: Add actual user creation logic with database
+	user := &User{
+		ID:      "placeholder-id",
+		Email:   req.Email,
+		Name:    req.Name,
+		Created: "2024-01-01T00:00:00Z",
+		Updated: "2024-01-01T00:00:00Z",
+	}
+	
+	return &CreateUserResponse{User: user}, nil
+}
+
+// GetUser retrieves a user by ID
+// TODO: Implement actual user retrieval logic
+//
+//encore:api private method=GET path=/users/:id
+func GetUser(ctx context.Context, id string) (*GetUserResponse, error) {
+	// Placeholder implementation
+	if id == "" {
+		return nil, errs.B().Msg("user id is required").Err()
+	}
+	
+	// TODO: Add actual user retrieval logic with database
+	user := &User{
+		ID:      id,
+		Email:   "placeholder@example.com",
+		Name:    "Placeholder User",
+		Created: "2024-01-01T00:00:00Z",
+		Updated: "2024-01-01T00:00:00Z",
+	}
+	
+	return &GetUserResponse{User: user}, nil
+}
