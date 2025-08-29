@@ -35,6 +35,11 @@ type GetNotificationResponse struct {
 	Notification *Notification `json:"notification"`
 }
 
+// ListNotificationsRequest represents the request to list notifications
+type ListNotificationsRequest struct {
+	UserID string `json:"user_id"`
+}
+
 // ListNotificationsResponse represents the response from listing notifications
 type ListNotificationsResponse struct {
 	Notifications []*Notification `json:"notifications"`
@@ -107,10 +112,10 @@ func GetNotification(ctx context.Context, id string) (*GetNotificationResponse, 
 // ListNotifications retrieves notifications for a user
 // TODO: Implement actual notification listing logic
 //
-//encore:api private method=GET path=/notifications
-func ListNotifications(ctx context.Context, userID string) (*ListNotificationsResponse, error) {
+//encore:api private method=POST path=/notifications/list
+func ListNotifications(ctx context.Context, req *ListNotificationsRequest) (*ListNotificationsResponse, error) {
 	// Placeholder implementation
-	if userID == "" {
+	if req.UserID == "" {
 		return nil, errs.B().Msg("user_id is required").Err()
 	}
 	
@@ -118,7 +123,7 @@ func ListNotifications(ctx context.Context, userID string) (*ListNotificationsRe
 	notifications := []*Notification{
 		{
 			ID:      "notif_1",
-			UserID:  userID,
+			UserID:  req.UserID,
 			Title:   "Welcome!",
 			Message: "Welcome to Sierra Explore",
 			Type:    "welcome",
@@ -128,7 +133,7 @@ func ListNotifications(ctx context.Context, userID string) (*ListNotificationsRe
 		},
 		{
 			ID:      "notif_2",
-			UserID:  userID,
+			UserID:  req.UserID,
 			Title:   "Payment Successful",
 			Message: "Your payment has been processed successfully",
 			Type:    "payment",
@@ -144,10 +149,10 @@ func ListNotifications(ctx context.Context, userID string) (*ListNotificationsRe
 // MarkAsRead marks a notification as read
 // TODO: Implement actual mark as read logic
 //
-//encore:api private method=POST path=/notifications/:id/read
-func MarkAsRead(ctx context.Context, id string) (*MarkAsReadResponse, error) {
+//encore:api private method=POST path=/notifications/read
+func MarkAsRead(ctx context.Context, req *MarkAsReadRequest) (*MarkAsReadResponse, error) {
 	// Placeholder implementation
-	if id == "" {
+	if req.NotificationID == "" {
 		return nil, errs.B().Msg("notification id is required").Err()
 	}
 	

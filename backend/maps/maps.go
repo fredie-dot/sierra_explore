@@ -2,6 +2,7 @@ package maps
 
 import (
 	"context"
+
 	"encore.dev/beta/errs"
 )
 
@@ -31,6 +32,11 @@ type CreateLocationResponse struct {
 	Location *Location `json:"location"`
 }
 
+// GetLocationRequest represents the request to get a location
+type GetLocationRequest struct {
+	ID string `json:"id"`
+}
+
 // GetLocationResponse represents the response from getting a location
 type GetLocationResponse struct {
 	Location *Location `json:"location"`
@@ -38,9 +44,9 @@ type GetLocationResponse struct {
 
 // SearchLocationsRequest represents the request to search for locations
 type SearchLocationsRequest struct {
-	Query string  `json:"query"`
-	Lat   float64 `json:"lat"`
-	Lng   float64 `json:"lng"`
+	Query  string  `json:"query"`
+	Lat    float64 `json:"lat"`
+	Lng    float64 `json:"lng"`
 	Radius int     `json:"radius"`
 }
 
@@ -58,7 +64,7 @@ func CreateLocation(ctx context.Context, req *CreateLocationRequest) (*CreateLoc
 	if req.Name == "" {
 		return nil, errs.B().Msg("name is required").Err()
 	}
-	
+
 	// TODO: Add actual location creation logic with Mapbox
 	location := &Location{
 		ID:          "loc_placeholder",
@@ -70,23 +76,23 @@ func CreateLocation(ctx context.Context, req *CreateLocationRequest) (*CreateLoc
 		Created:     "2024-01-01T00:00:00Z",
 		Updated:     "2024-01-01T00:00:00Z",
 	}
-	
+
 	return &CreateLocationResponse{Location: location}, nil
 }
 
 // GetLocation retrieves a location by ID
 // TODO: Implement actual location retrieval logic
 //
-//encore:api private method=GET path=/locations/:id
-func GetLocation(ctx context.Context, id string) (*GetLocationResponse, error) {
+//encore:api private method=POST path=/locations/get
+func GetLocation(ctx context.Context, req *GetLocationRequest) (*GetLocationResponse, error) {
 	// Placeholder implementation
-	if id == "" {
+	if req.ID == "" {
 		return nil, errs.B().Msg("location id is required").Err()
 	}
-	
+
 	// TODO: Add actual location retrieval logic
 	location := &Location{
-		ID:          id,
+		ID:          req.ID,
 		Name:        "Placeholder Location",
 		Description: "A placeholder location for testing",
 		Latitude:    40.7128,
@@ -95,7 +101,7 @@ func GetLocation(ctx context.Context, id string) (*GetLocationResponse, error) {
 		Created:     "2024-01-01T00:00:00Z",
 		Updated:     "2024-01-01T00:00:00Z",
 	}
-	
+
 	return &GetLocationResponse{Location: location}, nil
 }
 
@@ -108,7 +114,7 @@ func SearchLocations(ctx context.Context, req *SearchLocationsRequest) (*SearchL
 	if req.Query == "" {
 		return nil, errs.B().Msg("query is required").Err()
 	}
-	
+
 	// TODO: Add actual location search logic with Mapbox API
 	locations := []*Location{
 		{
@@ -132,6 +138,6 @@ func SearchLocations(ctx context.Context, req *SearchLocationsRequest) (*SearchL
 			Updated:     "2024-01-01T00:00:00Z",
 		},
 	}
-	
+
 	return &SearchLocationsResponse{Locations: locations}, nil
 }

@@ -25,6 +25,11 @@ type CreateUserResponse struct {
 	User *User `json:"user"`
 }
 
+// GetUserRequest represents the request to get a user
+type GetUserRequest struct {
+	ID string `json:"id"`
+}
+
 // GetUserResponse represents the response from getting a user
 type GetUserResponse struct {
 	User *User `json:"user"`
@@ -55,16 +60,16 @@ func CreateUser(ctx context.Context, req *CreateUserRequest) (*CreateUserRespons
 // GetUser retrieves a user by ID
 // TODO: Implement actual user retrieval logic
 //
-//encore:api private method=GET path=/users/:id
-func GetUser(ctx context.Context, id string) (*GetUserResponse, error) {
+//encore:api private method=POST path=/users/get
+func GetUser(ctx context.Context, req *GetUserRequest) (*GetUserResponse, error) {
 	// Placeholder implementation
-	if id == "" {
+	if req.ID == "" {
 		return nil, errs.B().Msg("user id is required").Err()
 	}
 	
 	// TODO: Add actual user retrieval logic with database
 	user := &User{
-		ID:      id,
+		ID:      req.ID,
 		Email:   "placeholder@example.com",
 		Name:    "Placeholder User",
 		Created: "2024-01-01T00:00:00Z",

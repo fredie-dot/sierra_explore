@@ -30,6 +30,11 @@ type CreatePaymentResponse struct {
 	Payment *Payment `json:"payment"`
 }
 
+// GetPaymentRequest represents the request to get a payment
+type GetPaymentRequest struct {
+	ID string `json:"id"`
+}
+
 // GetPaymentResponse represents the response from getting a payment
 type GetPaymentResponse struct {
 	Payment *Payment `json:"payment"`
@@ -67,16 +72,16 @@ func CreatePayment(ctx context.Context, req *CreatePaymentRequest) (*CreatePayme
 // GetPayment retrieves a payment by ID
 // TODO: Implement actual payment retrieval logic
 //
-//encore:api private method=GET path=/payments/:id
-func GetPayment(ctx context.Context, id string) (*GetPaymentResponse, error) {
+//encore:api private method=POST path=/payments/get
+func GetPayment(ctx context.Context, req *GetPaymentRequest) (*GetPaymentResponse, error) {
 	// Placeholder implementation
-	if id == "" {
+	if req.ID == "" {
 		return nil, errs.B().Msg("payment id is required").Err()
 	}
 	
 	// TODO: Add actual payment retrieval logic
 	payment := &Payment{
-		ID:          id,
+		ID:          req.ID,
 		Amount:      100.00,
 		Currency:    "USD",
 		Status:      "completed",
